@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, AIUEOPhoneActivity!</string>
+    <string name="app_name">AIUEOPhone</string>
+    <string name="main_disp_title">５０音順検索</string>
+    <string name="main_guide_comment">電話相手の頭文字で検索します。該当するボタンを押してください。</string>
+    <string name="A_gyou">あ行</string>
+    <string name="K_gyou">か行</string>
+    <string name="S_gyou">さ行</string>
+    <string name="T_gyou">た行</string>
+    <string name="N_gyou">な行</string>
+    <string name="H_gyou">は行</string>
+    <string name="M_gyou">ま行</string>
+    <string name="Y_agyou">や行</string>
+    <string name="R_gyou">ら行</string>
+    <string name="W_gyou">わ行</string>
+    <string name="all_disp">表示</string>
+    <string name="clear">中止</string>
+    <string name="kana">かな</string>
+    <string name="A">A</string>
+    <string name="numeric">数字</string>
+    <string name="Dan_disp_guide_comment">該当する文字のボタンを押してください。</string>
+    <string name="adress_list_disp_title">相手先候補表示</string>
+    <string name="adress_detail_title">電話相手の確認</string>
+    <string name="adress_detail_guide_comment">電話相手が間違いないか確認して『電話する』ボタンをおしてください。</string>
+    <string name="phone_number">電話番号</string>
+    <string name="display_name">名前</string>
+    <string name="phone_call">電話する</string>
+    <string name="title">５０音電話</string>
+    <string name="cancel">キャンセル</string>
+    
+</resources>

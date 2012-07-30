@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/main_disp_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/adress_list_disp_title"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#8B4513"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_weight="1">
+            <Button
+                android:id="@+id/Button01"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/select_phonebutton_bar_staleful"
+                android:gravity="left|center_vertical"
+                android:onClick="pressedNameButton"
+                android:paddingLeft="20sp"
+                android:text="Name"
+                android:textSize="32sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_weight="1">
+
+            <Button
+                android:id="@+id/Button02"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/select_phonebutton_bar_staleful"
+                android:gravity="left|center_vertical"
+                android:onClick="pressedNameButton"
+                android:paddingLeft="20sp"
+                android:text="Name"
+                android:textSize="32sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_weight="1"><Button
+                android:id="@+id/Button03"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/select_phonebutton_bar_staleful"
+                android:gravity="left|center_vertical"
+                android:onClick="pressedNameButton"
+                android:paddingLeft="20sp"
+                android:text="Name"
+                android:textSize="32sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_weight="1">
+
+            <Button
+                android:id="@+id/Button04"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/select_phonebutton_bar_staleful"
+                android:gravity="left|center_vertical"
+                android:onClick="pressedNameButton"
+                android:paddingLeft="20sp"
+                android:text="Name"
+                android:textSize="32sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/Button05"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_phonebutton_bar_staleful"
+                    android:onClick="prevList"
+                    android:text="前へ"
+                    android:textSize="32sp" />
+
+                <Button
+                    android:id="@+id/Button06"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/select_phonebutton_bar_staleful"
+                    android:onClick="nextList"
+                    android:text="次へ"
+                    android:textSize="32sp" />
+
+            </LinearLayout>
+
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>
