@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="list_entries">
-        <item>大</item>
-        <item>中（Default）</item>
-        <item>小</item>
+        <item>@string/DispCaseBig</item>
+        <item>@string/DispCaseMiddle</item>
+        <item>@string/DispCaseSmall</item>
     </string-array>
     <string-array name="list_entryvalues">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
+        <item>@string/caseSizeBig</item>
+        <item>@string/caseSizeMiddle</item>
+        <item>@string/caseSizeSmall</item>
     </string-array>
 </resources>

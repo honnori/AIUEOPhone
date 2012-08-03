@@ -4,6 +4,9 @@
     <string name="app_name">AIUEOPhone</string>
     <string name="main_disp_title">５０音順検索</string>
     <string name="main_guide_comment">電話相手の頭文字で検索します。該当するボタンを押してください。</string>
+    <string name="Candidatelist">候補一覧</string>
+    <string name="anaunce_voice">音声を入力してください</string>
+    <string name="NotExistVoiceApl">音声入力アプリがありません</string>
     <string name="A_gyou">あ行</string>
     <string name="K_gyou">か行</string>
     <string name="S_gyou">さ行</string>
@@ -31,5 +34,12 @@
     <string name="setting">設定</string>
     <string name="preView">前へ</string>
     <string name="next">次へ</string>
-    
+    <string name="DispCaseBig">大</string>
+    <string name="DispCaseMiddle">中</string>
+    <string name="DispCaseSmall">小</string>
+    <string name="caseSizeBig">1</string>
+    <string name="caseSizeMiddle">2</string>
+    <string name="caseSizeSmall">3</string>
+    <string name="voiceDescription">音声入力</string>
+        
 </resources>

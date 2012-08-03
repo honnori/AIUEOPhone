@@ -1,7 +1,7 @@
 package jp.takes.apps.aiueophone;
 
 import jp.takes.apps.aiueophone.base.BaseActivity;
-import jp.takes.apps.aiueophone.data.PreferenceData;
+import jp.takes.apps.aiueophone.data.CommonData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class AIUEOPhoneDanActivity extends BaseActivity {
 
-	public static final String[][] ALL_CASE_LIST = {
+	public final String[][] ALL_CASE_LIST = {
 		{"あ","い","う","え","お"},		// [0][0-4]
 		{"か","き","く","け","こ"},		// [1][0-4]
 		{"さ","し","す","せ","そ"},		// [2][0-4]
@@ -50,7 +50,7 @@ public class AIUEOPhoneDanActivity extends BaseActivity {
 		
 		// アドレスの名前一覧表示画面へ遷移
 		Intent i = new Intent(this, AdressListActivity.class);
-		i.putExtra("dan", dispName);
+		i.putExtra(CommonData.INTENT_NAME_DAN, dispName);
 		this.startActivityForResult(i, 0);
 
 	}
@@ -103,7 +103,7 @@ public class AIUEOPhoneDanActivity extends BaseActivity {
 	 */
 	private void showDanList() {
         Intent i = this.getIntent();
-		String dispName = i.getStringExtra("gyo");
+		String dispName = i.getStringExtra(CommonData.INTENT_NAME_GYO);
 		
 		Button buttonList[] = new Button[5];
 
@@ -165,10 +165,10 @@ public class AIUEOPhoneDanActivity extends BaseActivity {
 	 */
 	public void changeCaseSize() {
 		// 文字サイズ(SP)を各部品に設定する
-		((Button)this.findViewById(R.id.Button01)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.Button02)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.Button03)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.Button04)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.Button05)).setTextSize(PreferenceData.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button01)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button02)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button03)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button04)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button05)).setTextSize(this.getCaseSizeSP());
 	}
 }

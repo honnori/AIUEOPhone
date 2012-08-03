@@ -20,17 +20,36 @@ public class LogUtil {
 
 	
 	// スタックトレースを表示します。
-	public static void d(Activity obj, String message, StackTraceElement[] ste) {
+	public static void d(Activity obj, String message, Throwable e) {
+		StackTraceElement[] ste = e.getStackTrace();
+		
 		LogUtil.d((String)obj.getLocalClassName(), message 
-				+ String.format(" ：FILE=%s LINE=%s FUNC=%s"
-						, ste[0].getFileName(), ste[0].getLineNumber(), ste[0].getMethodName()));
+				+ String.format(" ： LINE = %s FUNC = %s"
+						, ste[0].getLineNumber(), ste[0].getMethodName()));
 	}
 
-	// デバッグモードflagが真の場合にログを出力
-	public static void d(String tag, String message, boolean flag) {
-		if (flag) {
-			Log.d(tag, message);
-		}
-	}
 
+	/**
+	 * 処理開始ログ
+	 * @param obj
+	 * @param e
+	 */
+	public static void startLog(Activity obj, Throwable e) {
+		LogUtil.d((String)obj.getLocalClassName(), 
+				String.format(">>>> START  FUNC = %s()", e.getStackTrace()[0].getMethodName())
+				);
+	}
+	
+	/**
+	 * 処理終了ログ
+	 * @param obj
+	 * @param e
+	 */
+	public static void endLog(Activity obj, Throwable e) {
+		LogUtil.d((String)obj.getLocalClassName(), 
+				String.format("<<<< END    FUNC = %s()", e.getStackTrace()[0].getMethodName())
+				);
+	}
+	
+	
 }

@@ -4,8 +4,6 @@
     android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-
-
     <TextView
         android:id="@+id/main_disp_title"
         android:layout_width="match_parent"
@@ -17,7 +15,7 @@
         android:textColor="#8B4513"
         android:textSize="40sp"
         android:textStyle="bold" />
-<TextView
+    <TextView
         android:id="@+id/main_disp_guide_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,11 +26,12 @@
         android:textColor="#000000"
         android:textSize="24sp" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" ><Button
+        android:orientation="vertical" >
+        
+        <Button
             android:id="@+id/Button01"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,10 +42,7 @@
             android:layout_weight="1"
             android:background="@drawable/select_phonebutton_bar_staleful"
             android:onClick="pressedDanButton"
-            android:text="Button"
             android:textSize="32dp" />
-
-
 
         <Button
             android:id="@+id/Button02"
@@ -59,10 +55,7 @@
             android:layout_weight="1"
             android:background="@drawable/select_phonebutton_bar_staleful"
             android:onClick="pressedDanButton"
-            android:text="Button"
             android:textSize="32dp" />
-
-
 
         <Button
             android:id="@+id/Button03"
@@ -75,10 +68,7 @@
             android:layout_weight="1"
             android:background="@drawable/select_phonebutton_bar_staleful"
             android:onClick="pressedDanButton"
-            android:text="Button"
             android:textSize="32dp" />
-
-
 
         <Button
             android:id="@+id/Button04"
@@ -91,12 +81,7 @@
             android:layout_weight="1"
             android:background="@drawable/select_phonebutton_bar_staleful"
             android:onClick="pressedDanButton"
-            android:text="Button"
             android:textSize="32dp" />
-
-
-
-
 
         <Button
             android:id="@+id/Button05"
@@ -109,7 +94,6 @@
             android:layout_weight="1"
             android:background="@drawable/select_phonebutton_bar_staleful"
             android:onClick="pressedDanButton"
-            android:text="Button"
             android:textSize="32dp" />
 
     </LinearLayout>

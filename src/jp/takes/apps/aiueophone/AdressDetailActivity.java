@@ -1,7 +1,7 @@
 package jp.takes.apps.aiueophone;
 
 import jp.takes.apps.aiueophone.base.BaseActivity;
-import jp.takes.apps.aiueophone.data.PreferenceData;
+import jp.takes.apps.aiueophone.data.CommonData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,9 +25,9 @@ public class AdressDetailActivity extends BaseActivity {
     
     public void showAdressDetail() {
         Intent i = this.getIntent();
-        name = i.getStringExtra("name");
-        kana = i.getStringExtra("kana");
-        number = i.getStringExtra("number");
+        name = i.getStringExtra(CommonData.INTENT_NAME_NAME);
+        kana = i.getStringExtra(CommonData.INTENT_NAME_KANA);
+        number = i.getStringExtra(CommonData.INTENT_NAME_NUMBER);
         
         TextView vDispName = (TextView)this.findViewById(R.id.dispName);
         TextView vPhoneNum = (TextView)this.findViewById(R.id.dispPhoneNum);
@@ -56,8 +56,8 @@ public class AdressDetailActivity extends BaseActivity {
 	 */
 	public void changeCaseSize() {
 		// 文字サイズ(SP)を各部品に設定する
-		((TextView)this.findViewById(R.id.dispName)).setTextSize(PreferenceData.getCaseSizeSP());
-		((TextView)this.findViewById(R.id.dispPhoneNum)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.phoneButton)).setTextSize(PreferenceData.getCaseSizeSP());
+		((TextView)this.findViewById(R.id.dispName)).setTextSize(this.getCaseSizeSP());
+		((TextView)this.findViewById(R.id.dispPhoneNum)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.phoneButton)).setTextSize(this.getCaseSizeSP());
 	}
 }

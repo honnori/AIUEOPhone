@@ -5,9 +5,8 @@ import java.util.HashMap;
 
 import jp.takes.apps.aiueophone.base.BaseActivity;
 import jp.takes.apps.aiueophone.data.AdressData;
-import jp.takes.apps.aiueophone.data.PreferenceData;
+import jp.takes.apps.aiueophone.data.CommonData;
 import jp.takes.apps.aiueophone.util.CaseConverterUtil;
-import jp.takes.apps.aiueophone.util.LogUtil;
 import jp.takes.apps.aiueophone.util.ToastUtil;
 
 import android.content.ContentResolver;
@@ -26,20 +25,24 @@ public class AdressListActivity extends BaseActivity {
 	private	Integer displayBarNum = 4;
 	
 	
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.adress_list);
-        
-        Intent i = this.getIntent();
-        selectCase = i.getStringExtra("dan");
-        
-        this.showAdressList();
-    }
-    
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		this.startLog(new Throwable());		// メソッド開始ログ
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.adress_list);
+
+		Intent i = this.getIntent();
+		selectCase = i.getStringExtra(CommonData.INTENT_NAME_DAN);
+
+		this.showAdressList();
+		this.endLog(new Throwable());		// メソッド終了ログ
+	}
+
 	@Override
 	protected void onStop() {
+		this.startLog(new Throwable());		// メソッド開始ログ
 		super.onStop();
+		this.endLog(new Throwable());		// メソッド終了ログ
 	}
 	
 	/**
@@ -48,6 +51,7 @@ public class AdressListActivity extends BaseActivity {
 	 * @param view
 	 */
 	public void pressedNameButton(View view) {
+		this.startLog(new Throwable());		// メソッド開始ログ
 
 		Integer pos = -1;
 		Button btn = (Button)view;
@@ -68,11 +72,12 @@ public class AdressListActivity extends BaseActivity {
 		
 		// 電話相手の詳細画面へ遷移
 		Intent i = new Intent(this, AdressDetailActivity.class);
-		i.putExtra("name", adressList[position + pos].displayName);
-		i.putExtra("kana", adressList[position + pos].kanaName);
-		i.putExtra("number", adressList[position + pos].phoneNum);
+		i.putExtra(CommonData.INTENT_NAME_NAME, adressList[position + pos].displayName);
+		i.putExtra(CommonData.INTENT_NAME_KANA, adressList[position + pos].kanaName);
+		i.putExtra(CommonData.INTENT_NAME_NUMBER, adressList[position + pos].phoneNum);
 		this.startActivityForResult(i, 0);
-		
+
+		this.endLog(new Throwable());		// メソッド終了ログ
 	}
 	
 	/** 
@@ -97,6 +102,7 @@ public class AdressListActivity extends BaseActivity {
 
 
 	private AdressData[] getAddressData() {
+		this.startLog(new Throwable());		// メソッド開始ログ
 		
         //アドレス情報の取得
         ContentResolver cr = this.getContentResolver();
@@ -116,6 +122,7 @@ public class AdressListActivity extends BaseActivity {
 			mailHash.put(phoneNumberCursor.getString(phoneNumberCursor.getColumnIndex(ContactsContract.Data.CONTACT_ID)), // ID
 					phoneNumberCursor.getString(phoneNumberCursor.getColumnIndex(ContactsContract.Data.DATA1))); // 電話番号
 		}
+		phoneNumberCursor.close();
 		
 		if (mailHash.size() == 0) {
 			ToastUtil.showLong(this, "電話帳の情報がありません。");
@@ -177,6 +184,7 @@ public class AdressListActivity extends BaseActivity {
 				listPhoneNums.add(mailHash.get(id));
 			}
 		}
+		dataNamecursor.close();
 		
 		Integer num = listKanaNames.size();
 		AdressData[] adressData = new AdressData[num];
@@ -190,8 +198,10 @@ public class AdressListActivity extends BaseActivity {
 		// adressListをかな順にソートする。
 		java.util.Arrays.sort(adressData);
 		
-		return adressData;
 
+		this.endLog(new Throwable());		// メソッド終了ログ
+
+		return adressData;
 	}
 	
 	
@@ -209,10 +219,10 @@ public class AdressListActivity extends BaseActivity {
 
 		// 検索キーを半角カナに変換
 		this.selectCase = new CaseConverterUtil().changeZenkakuToHankaku(this.selectCase);
-		LogUtil.d(this, "selectCase = " + this.selectCase);
+		this.log("selectCase = " + this.selectCase, new Throwable());
 		
 		this.position = this.matchCase(this.adressList, this.selectCase);
-		LogUtil.d(this, "position = " + this.position);
+		this.log("position = " + this.position, new Throwable());
 
 		this.showList(0);
 	}
@@ -302,13 +312,17 @@ public class AdressListActivity extends BaseActivity {
 	 * 表示文字列のサイズを変更する。
 	 */
 	public void changeCaseSize() {
+		this.startLog(new Throwable());
+		
 		// 文字サイズ(SP)を各部品に設定する
-		((Button)this.findViewById(R.id.Button01)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.Button02)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.Button03)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.Button04)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.Button05)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.Button06)).setTextSize(PreferenceData.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button01)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button02)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button03)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button04)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button05)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button06)).setTextSize(this.getCaseSizeSP());
+
+		this.endLog(new Throwable());
 	}
 	
 }

@@ -16,29 +16,30 @@ public class MainPreferenceActivity extends BasePreferenceActivity implements On
 	private ListPreference listPref = null;
 	// CheckBoxPreference
 	private CheckBoxPreference cbp = null;
-	
+
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.addPreferencesFromResource(R.xml.pref);
-        
-        // 保存データ領域へアクセス
-		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.addPreferencesFromResource(R.xml.pref);
+
+		// 保存データ領域へアクセス
+		SharedPreferences pref = PreferenceManager
+				.getDefaultSharedPreferences(this);
 
 		// ListPreferenceの取得
-        listPref = (ListPreference)this.findPreference("caseSize");
-        listPref.setOnPreferenceChangeListener(this);
+		listPref = (ListPreference) this.findPreference("caseSize");
+		listPref.setOnPreferenceChangeListener(this);
 
 		// 文字サイズ設定の初期表示
-		String param = pref.getString("caseSize", "");
+		String param = pref.getString("caseSize", "2");
 		listPref.setDefaultValue(param);
 		this.setSummary(param);
 
 		// デバッグモードの初期表示
 		cbp = (CheckBoxPreference)this.findPreference("debugMode");
 		cbp.setOnPreferenceChangeListener(this);
-        boolean debugFlag = pref.getBoolean("debugMode", false);
-        cbp.setDefaultValue(debugFlag);
+		boolean debugFlag = pref.getBoolean("debugMode", false);
+		cbp.setDefaultValue(debugFlag);
 	}
 
 	@Override

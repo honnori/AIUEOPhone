@@ -3,9 +3,8 @@ package jp.takes.apps.aiueophone;
 import java.util.ArrayList;
 
 import jp.takes.apps.aiueophone.base.BaseActivity;
-import jp.takes.apps.aiueophone.data.PreferenceData;
+import jp.takes.apps.aiueophone.data.CommonData;
 import jp.takes.apps.aiueophone.util.AlertDialogUtil;
-import jp.takes.apps.aiueophone.util.LogUtil;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -22,24 +21,12 @@ public class AIUEOPhoneGyoActivity extends BaseActivity implements OnClickListen
 	// 音声認識の対象文字列
 	public String[] strNameList = null;
 
-	/**
-	 * アプリとして起動時の初期処理が必要な場合に使用
-	 * ただし、現状、onCreate（）で読んでいるため、厳密に初期起動時にのみ呼ばれるわけではないので注意が必要。
-	 */
-	private void init() {
-        // デバッグモードを初期値を設定
-		PreferenceData.takeDebugModeFromSharedPreferences(this);
-		
-		// 文字サイズの初期値を設定
-		PreferenceData.takeCaseSizeFromSharedPreferences(this);
-	}
-	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // アプリの初期処理を実施
+        // アプリの初期処理を実施(ルートの画面でのみ呼び出す)
         this.init();
         
         this.setContentView(R.layout.gyo_case);
@@ -47,7 +34,9 @@ public class AIUEOPhoneGyoActivity extends BaseActivity implements OnClickListen
 
 	@Override
 	protected void onStop() {
+		this.startLog(new Throwable());		// メソッド開始ログ
 		super.onStop();
+		this.endLog(new Throwable());		// メソッド開始ログ
 	}
 	
 	/**
@@ -59,16 +48,18 @@ public class AIUEOPhoneGyoActivity extends BaseActivity implements OnClickListen
 		String dispName = ((TextView)view).getText().toString();
 		// 段ボタン一覧表示画面へ遷移
 		Intent i = new Intent(this, AIUEOPhoneDanActivity.class);
-		i.putExtra("gyo", dispName);
+		i.putExtra(CommonData.INTENT_NAME_GYO, dispName);
 		this.startActivityForResult(i, 0);
 	}
 	
 	public void pressedAllDispButton(View view) {
+		this.startLog(new Throwable());		// メソッド開始ログ
 		// アドレス一覧表示画面へ遷移
 		Intent i = new Intent(this, AdressListActivity.class);
 		// 先頭を表示するため、""を設定する
-		i.putExtra("dan", "");
+		i.putExtra(CommonData.INTENT_NAME_DAN, "");
 		this.startActivityForResult(i, 1);
+		this.endLog(new Throwable());		// メソッド開始ログ
 	}
 
 	public void pressedPreferenceButton(View view) {
@@ -83,12 +74,12 @@ public class AIUEOPhoneGyoActivity extends BaseActivity implements OnClickListen
 			Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 			intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
 					RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-			intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "音声を入力してください。");
+			intent.putExtra(RecognizerIntent.EXTRA_PROMPT, this.getString(R.string.anaunce_voice));
 			// インテント発行
 			this.startActivityForResult(intent, 1);
 		} catch (ActivityNotFoundException e) {
-			Toast.makeText(this, "音声入力アプリがありません", Toast.LENGTH_LONG).show();
-			LogUtil.d(this.toString(), "音声入力アプリがありません", PreferenceData.isdebugMode());
+			Toast.makeText(this, this.getString(R.string.NotExistVoiceApl), Toast.LENGTH_LONG).show();
+			this.log("音声入力アプリがありません");
 		}
 	}
 	
@@ -105,19 +96,19 @@ public class AIUEOPhoneGyoActivity extends BaseActivity implements OnClickListen
 				break;
 			case 1:	// 音声認識画面から復帰
 				ArrayList<String> candidates = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-				LogUtil.d(this, "音声検索結果の数 = " + candidates.size());
+				this.log("音声検索結果の数 = " + candidates.size());
 
 				Integer num = candidates.size();
 				this.strNameList = new String[num];
 				for (Integer i = 0; i< num ; i++) {
 					this.strNameList[i] = candidates.get(i);
-					LogUtil.d(this, "音声検索結果の候補 = " + this.strNameList[i]);
+					this.log("音声検索結果の候補 = " + this.strNameList[i]);
 				}
 				
 				if(num > 0) {
 					// 候補が取得できているので
 					// 候補一覧をダイアログで表示する
-					AlertDialogUtil.showAlert(this, "候補一覧", this.strNameList);
+					AlertDialogUtil.showAlert(this, this.getString(R.string.Candidatelist), this.strNameList);
 				}
 
 				break;
@@ -131,7 +122,7 @@ public class AIUEOPhoneGyoActivity extends BaseActivity implements OnClickListen
 		// アドレス一覧表示画面へ遷移
 		Intent i = new Intent(this, AdressListActivity.class);
 		// 先頭を表示するため、""を設定する
-		i.putExtra("dan", name);
+		i.putExtra(CommonData.INTENT_NAME_DAN, name);
 		this.startActivityForResult(i, 2);
 	}
 	
@@ -153,17 +144,17 @@ public class AIUEOPhoneGyoActivity extends BaseActivity implements OnClickListen
 	@Override
 	public void changeCaseSize() {
 		// 文字サイズ(SP)を各部品に設定する
-		((Button)this.findViewById(R.id.button_0101)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.button_0102)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.button_0103)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.button_0201)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.button_0202)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.button_0203)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.button_0301)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.button_0302)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.button_0303)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.button_0401)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.button_0402)).setTextSize(PreferenceData.getCaseSizeSP());
-		((Button)this.findViewById(R.id.button_0403)).setTextSize(PreferenceData.getCaseSizeSP());
+		((Button)this.findViewById(R.id.button_0101)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.button_0102)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.button_0103)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.button_0201)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.button_0202)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.button_0203)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.button_0301)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.button_0302)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.button_0303)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.button_0401)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.button_0402)).setTextSize(this.getCaseSizeSP());
+		((Button)this.findViewById(R.id.button_0403)).setTextSize(this.getCaseSizeSP());
 	}
 }

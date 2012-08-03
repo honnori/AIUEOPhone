@@ -3,6 +3,7 @@
  */
 package jp.takes.apps.aiueophone.data;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -15,7 +16,6 @@ public class PreferenceData {
 
 	// 文字サイズのデフォルト値　中
 	public static final String DEFAULT_CASE_SIZE = "2";
-
 	// 表示文字サイズ　大
 	private static final Integer CASE_SIZE_BIG = 36;
 	// 表示文字サイズ　中
@@ -45,25 +45,36 @@ public class PreferenceData {
 	public static void takeCaseSizeFromSharedPreferences(Context context) {
 		// データ保存領域から文字サイズ設定を取得
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-		PreferenceData.setCaseSize(pref.getString("caseSize", ""));
+		String size = pref.getString("caseSize", DEFAULT_CASE_SIZE);
+		
+		// 文字列が空の場合、デフォルト値を設定
+		if (size.equals("")) {
+			size = DEFAULT_CASE_SIZE;
+			SharedPreferences.Editor editor = pref.edit();
+			editor.putString("caseSize", DEFAULT_CASE_SIZE);
+			editor.commit();
+		}
+		
+		PreferenceData.setCaseSize(size);
 	}
 
 	/**
 	 * 設定値（文字サイズ）を取得
 	 * @return 文字サイズ（sp）を返却
 	 */
-	public static Integer getCaseSizeSP() {
-		Integer caseSizeSP = 0;
+	public static Integer getCaseSizeSP(Activity act) {
+		// デフォルト値は中サイズ
+		Integer caseSizeSP = CASE_SIZE_MIDDLE;
 		
 		String size = (caseSize == null) ? DEFAULT_CASE_SIZE : caseSize;
 		
-		if (size.equals("1")) {
+		if (size.equals(act.getString(jp.takes.apps.aiueophone.R.string.caseSizeBig))) {
 			caseSizeSP = CASE_SIZE_BIG;
 		}
-		else if (size.equals("2")) {
+		else if (size.equals(act.getString(jp.takes.apps.aiueophone.R.string.caseSizeMiddle))) {
 			caseSizeSP = CASE_SIZE_MIDDLE;
 		}
-		else if (size.equals("3")) {
+		else if (size.equals(act.getString(jp.takes.apps.aiueophone.R.string.caseSizeSmall))) {
 			caseSizeSP = CASE_SIZE_SMALL;
 		}
 		
