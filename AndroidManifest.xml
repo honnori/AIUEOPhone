@@ -10,18 +10,19 @@
 
     <application
         android:icon="@drawable/fiftyon_ic"
-        android:label="@string/title" android:theme="@style/app_theme">
+        android:label="@string/title">
         <activity
-            android:name=".AIUEOPhoneGyoActivity">
+            android:name=".AIUEOPhoneGyoActivity" android:theme="@style/app_theme" android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="AIUEOPhoneDanActivity"></activity>
-        <activity android:name="AdressListActivity"></activity>
-        <activity android:name="AdressDetailActivity"></activity>
+        <activity android:name="AIUEOPhoneDanActivity" android:theme="@style/app_theme" android:screenOrientation="nosensor"></activity>
+        <activity android:name="AdressListActivity" android:theme="@style/app_theme" android:screenOrientation="nosensor"></activity>
+        <activity android:name="AdressDetailActivity" android:theme="@style/app_theme" android:screenOrientation="nosensor"></activity>
+        <activity android:name="MainPreferenceActivity" android:screenOrientation="nosensor"></activity>
     </application>
             
 </manifest>

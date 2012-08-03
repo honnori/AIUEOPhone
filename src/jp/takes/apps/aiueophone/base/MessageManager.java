@@ -11,11 +11,10 @@ public class MessageManager {
 	// INFO
 	// WARNING
 	// ERROR
-
+	
 	
 	public String getMessage(int id) {
 		String message = "";
-		
 		
 		
 		return message;

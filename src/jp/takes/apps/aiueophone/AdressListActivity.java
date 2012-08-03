@@ -5,7 +5,9 @@ import java.util.HashMap;
 
 import jp.takes.apps.aiueophone.base.BaseActivity;
 import jp.takes.apps.aiueophone.data.AdressData;
+import jp.takes.apps.aiueophone.data.PreferenceData;
 import jp.takes.apps.aiueophone.util.CaseConverterUtil;
+import jp.takes.apps.aiueophone.util.LogUtil;
 import jp.takes.apps.aiueophone.util.ToastUtil;
 
 import android.content.ContentResolver;
@@ -13,7 +15,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -95,10 +96,7 @@ public class AdressListActivity extends BaseActivity {
 	}
 
 
-	/**
-	 * 電話帳からデータを取得しアドレス情報一覧を表示する。
-	 */
-	private void showAdressList() {
+	private AdressData[] getAddressData() {
 		
         //アドレス情報の取得
         ContentResolver cr = this.getContentResolver();
@@ -123,7 +121,7 @@ public class AdressListActivity extends BaseActivity {
 			ToastUtil.showLong(this, "電話帳の情報がありません。");
 			// 表示できないので戻る
 			this.finish();
-			return;
+			return null;
 		}
         
      // ソート文字を格納（連絡先一覧を "ふりがな" 順でソート）
@@ -181,36 +179,49 @@ public class AdressListActivity extends BaseActivity {
 		}
 		
 		Integer num = listKanaNames.size();
-		this.adressList = new AdressData[num];
+		AdressData[] adressData = new AdressData[num];
 		for (Integer i = 0; i < num; i++) {
-			this.adressList[i] = new AdressData();
-			this.adressList[i].displayName = listNames.get(i);
-			this.adressList[i].kanaName = listKanaNames.get(i);
-			this.adressList[i].phoneNum = listPhoneNums.get(i);
+			adressData[i] = new AdressData();
+			adressData[i].displayName = listNames.get(i);
+			adressData[i].kanaName = listKanaNames.get(i);
+			adressData[i].phoneNum = listPhoneNums.get(i);
 		}
+		
 		// adressListをかな順にソートする。
-		java.util.Arrays.sort(adressList);
+		java.util.Arrays.sort(adressData);
 		
-		Button[] buttonList = new Button[4];
-		buttonList[0] = (Button)this.findViewById(R.id.Button01);
-		buttonList[1] = (Button)this.findViewById(R.id.Button02);
-		buttonList[2] = (Button)this.findViewById(R.id.Button03);
-		buttonList[3] = (Button)this.findViewById(R.id.Button04);
+		return adressData;
 
-		this.selectCase = new CaseConverterUtil().changeZenkakuToHankaku(this.selectCase);
+	}
+	
+	
+	/**
+	 * 電話帳からデータを取得しアドレス情報一覧を表示する。
+	 */
+	private void showAdressList() {
 		
-		Log.i(this.toString(), "selectCase = " + this.selectCase);
+		// 電話帳からデータを取得
+		adressList = this.getAddressData();
+		if (adressList == null) {
+			// データ取得できない場合、画面表示不可のため処理終了
+			return;
+		}
+
+		// 検索キーを半角カナに変換
+		this.selectCase = new CaseConverterUtil().changeZenkakuToHankaku(this.selectCase);
+		LogUtil.d(this, "selectCase = " + this.selectCase);
 		
 		this.position = this.matchCase(this.adressList, this.selectCase);
-		Log.i(this.toString(), "position = " + this.position);
-		
+		LogUtil.d(this, "position = " + this.position);
+
 		this.showList(0);
 	}
 	
 	/**
-	 * 
-	 * @param strList ソート済み
-	 * @return
+	 * 第2引数で指定した文字列が第一引数の配列のカナ文字列と比較し
+	 * 第2引数文字列が配列に挿入される場合の位置をを返す。
+	 * @param strList ソート済み前提
+	 * @return　position　AdressData[]の該当位置を返却する。
 	 */
 	private Integer matchCase(AdressData[] strList, String matchCase) {
 
@@ -227,13 +238,16 @@ public class AdressListActivity extends BaseActivity {
 		return position;
 	}
 	
-
+	
+	/**
+	 * アドレスリストの情報を表示する。
+	 * @param cnt アドレスリストの配列の現在位置からのオフセット値を設定
+	 */
 	private void showList(int cnt) {
 		// 初期化
 		((Button)this.findViewById(R.id.Button05)).setEnabled(true);
 		((Button)this.findViewById(R.id.Button06)).setEnabled(true);
 		
-
 		// ポジションをカウントアップする。
 		this.position = this.position + cnt;
 		
@@ -268,14 +282,33 @@ public class AdressListActivity extends BaseActivity {
 		}
 	}
 	
-	
+	/**
+	 * 「前へ」ボタン押下時に呼ばれる。
+	 * @param view
+	 */
 	public void prevList(View view) {
 		this.showList(-this.displayBarNum);
 	}
 
-	
+	/**
+	 * 「次へ」ボタン押下時に呼ばれる。
+	 * @param view
+	 */
 	public void nextList(View view) {
 		this.showList(this.displayBarNum);
+	}
+	
+	/**
+	 * 表示文字列のサイズを変更する。
+	 */
+	public void changeCaseSize() {
+		// 文字サイズ(SP)を各部品に設定する
+		((Button)this.findViewById(R.id.Button01)).setTextSize(PreferenceData.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button02)).setTextSize(PreferenceData.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button03)).setTextSize(PreferenceData.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button04)).setTextSize(PreferenceData.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button05)).setTextSize(PreferenceData.getCaseSizeSP());
+		((Button)this.findViewById(R.id.Button06)).setTextSize(PreferenceData.getCaseSizeSP());
 	}
 	
 }

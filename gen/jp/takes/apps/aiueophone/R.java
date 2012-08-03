@@ -8,6 +8,10 @@
 package jp.takes.apps.aiueophone;
 
 public final class R {
+    public static final class array {
+        public static final int list_entries=0x7f050000;
+        public static final int list_entryvalues=0x7f050001;
+    }
     public static final class attr {
     }
     public static final class drawable {
@@ -25,75 +29,81 @@ public final class R {
         public static final int voice=0x7f02000b;
     }
     public static final class id {
-        public static final int Button01=0x7f060008;
-        public static final int Button02=0x7f06000a;
-        public static final int Button03=0x7f06000c;
-        public static final int Button04=0x7f06000e;
-        public static final int Button05=0x7f060010;
-        public static final int Button06=0x7f060011;
-        public static final int button1=0x7f060006;
-        public static final int button_0101=0x7f060012;
-        public static final int button_0102=0x7f060013;
-        public static final int button_0103=0x7f060014;
-        public static final int button_0201=0x7f060015;
-        public static final int button_0202=0x7f060016;
-        public static final int button_0203=0x7f060017;
-        public static final int button_0301=0x7f060018;
-        public static final int button_0302=0x7f060019;
-        public static final int button_0303=0x7f06001a;
-        public static final int button_0401=0x7f06001c;
-        public static final int button_0402=0x7f06001b;
-        public static final int button_0403=0x7f06001d;
-        public static final int button_0503=0x7f06001e;
-        public static final int dispName=0x7f060003;
-        public static final int dispPhoneNum=0x7f060005;
-        public static final int main_disp_guide_comment=0x7f060001;
-        public static final int main_disp_title=0x7f060000;
-        public static final int tableRow1=0x7f060007;
-        public static final int tableRow2=0x7f060009;
-        public static final int tableRow3=0x7f06000b;
-        public static final int tableRow4=0x7f06000d;
-        public static final int tableRow5=0x7f06000f;
-        public static final int textView1=0x7f060002;
-        public static final int textView3=0x7f060004;
+        public static final int Button01=0x7f080008;
+        public static final int Button02=0x7f08000a;
+        public static final int Button03=0x7f08000c;
+        public static final int Button04=0x7f08000e;
+        public static final int Button05=0x7f080010;
+        public static final int Button06=0x7f080011;
+        public static final int button_0101=0x7f080012;
+        public static final int button_0102=0x7f080013;
+        public static final int button_0103=0x7f080014;
+        public static final int button_0201=0x7f080015;
+        public static final int button_0202=0x7f080016;
+        public static final int button_0203=0x7f080017;
+        public static final int button_0301=0x7f080018;
+        public static final int button_0302=0x7f080019;
+        public static final int button_0303=0x7f08001a;
+        public static final int button_0401=0x7f08001c;
+        public static final int button_0402=0x7f08001b;
+        public static final int button_0403=0x7f08001d;
+        public static final int button_0503=0x7f08001e;
+        public static final int dispName=0x7f080003;
+        public static final int dispPhoneNum=0x7f080005;
+        public static final int main_disp_guide_comment=0x7f080001;
+        public static final int main_disp_title=0x7f080000;
+        public static final int phoneButton=0x7f080006;
+        public static final int tableRow1=0x7f080007;
+        public static final int tableRow2=0x7f080009;
+        public static final int tableRow3=0x7f08000b;
+        public static final int tableRow4=0x7f08000d;
+        public static final int tableRow5=0x7f08000f;
+        public static final int textView1=0x7f080002;
+        public static final int textView3=0x7f080004;
     }
     public static final class layout {
         public static final int adress_detail=0x7f030000;
         public static final int adress_list=0x7f030001;
         public static final int dan_case_list=0x7f030002;
-        public static final int main=0x7f030003;
+        public static final int gyo_case=0x7f030003;
     }
     public static final class string {
-        public static final int A=0x7f040011;
-        public static final int A_gyou=0x7f040004;
-        public static final int Dan_disp_guide_comment=0x7f040013;
-        public static final int H_gyou=0x7f040009;
-        public static final int K_gyou=0x7f040005;
-        public static final int M_gyou=0x7f04000a;
-        public static final int N_gyou=0x7f040008;
-        public static final int R_gyou=0x7f04000c;
-        public static final int S_gyou=0x7f040006;
-        public static final int T_gyou=0x7f040007;
-        public static final int W_gyou=0x7f04000d;
-        public static final int Y_agyou=0x7f04000b;
-        public static final int adress_detail_guide_comment=0x7f040016;
-        public static final int adress_detail_title=0x7f040015;
-        public static final int adress_list_disp_title=0x7f040014;
-        public static final int all_disp=0x7f04000e;
-        public static final int app_name=0x7f040001;
-        public static final int cancel=0x7f04001b;
-        public static final int clear=0x7f04000f;
-        public static final int display_name=0x7f040018;
-        public static final int hello=0x7f040000;
-        public static final int kana=0x7f040010;
-        public static final int main_disp_title=0x7f040002;
-        public static final int main_guide_comment=0x7f040003;
-        public static final int numeric=0x7f040012;
-        public static final int phone_call=0x7f040019;
-        public static final int phone_number=0x7f040017;
-        public static final int title=0x7f04001a;
+        public static final int A=0x7f060010;
+        public static final int A_gyou=0x7f060003;
+        public static final int Dan_disp_guide_comment=0x7f060012;
+        public static final int H_gyou=0x7f060008;
+        public static final int K_gyou=0x7f060004;
+        public static final int M_gyou=0x7f060009;
+        public static final int N_gyou=0x7f060007;
+        public static final int R_gyou=0x7f06000b;
+        public static final int S_gyou=0x7f060005;
+        public static final int T_gyou=0x7f060006;
+        public static final int W_gyou=0x7f06000c;
+        public static final int Y_gyou=0x7f06000a;
+        public static final int adress_detail_guide_comment=0x7f060015;
+        public static final int adress_detail_title=0x7f060014;
+        public static final int adress_list_disp_title=0x7f060013;
+        public static final int all_disp=0x7f06000d;
+        public static final int app_name=0x7f060000;
+        public static final int cancel=0x7f06001a;
+        public static final int clear=0x7f06000e;
+        public static final int display_name=0x7f060017;
+        public static final int kana=0x7f06000f;
+        public static final int main_disp_title=0x7f060001;
+        public static final int main_guide_comment=0x7f060002;
+        public static final int next=0x7f06001d;
+        public static final int numeric=0x7f060011;
+        public static final int phone_call=0x7f060018;
+        public static final int phone_number=0x7f060016;
+        public static final int preView=0x7f06001c;
+        public static final int setting=0x7f06001b;
+        public static final int title=0x7f060019;
     }
     public static final class style {
-        public static final int app_theme=0x7f050000;
+        public static final int app_theme=0x7f070000;
+        public static final int pref_theme=0x7f070001;
+    }
+    public static final class xml {
+        public static final int pref=0x7f040000;
     }
 }

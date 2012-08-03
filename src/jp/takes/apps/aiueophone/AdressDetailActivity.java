@@ -1,10 +1,12 @@
 package jp.takes.apps.aiueophone;
 
 import jp.takes.apps.aiueophone.base.BaseActivity;
+import jp.takes.apps.aiueophone.data.PreferenceData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class AdressDetailActivity extends BaseActivity {
@@ -44,11 +46,18 @@ public class AdressDetailActivity extends BaseActivity {
     	if (number != null) {
         	Intent intent = new Intent( Intent.ACTION_CALL, Uri.parse("tel:" + number));
 //        	Intent intent = new Intent( Intent.ACTION_DIAL, Uri.parse("tel:" + number));
-        	startActivity(intent);
+        	this.startActivity(intent);
     	}
     	
     }
     
-    
-
+	/**
+	 * 表示文字列のサイズを変更する。
+	 */
+	public void changeCaseSize() {
+		// 文字サイズ(SP)を各部品に設定する
+		((TextView)this.findViewById(R.id.dispName)).setTextSize(PreferenceData.getCaseSizeSP());
+		((TextView)this.findViewById(R.id.dispPhoneNum)).setTextSize(PreferenceData.getCaseSizeSP());
+		((Button)this.findViewById(R.id.phoneButton)).setTextSize(PreferenceData.getCaseSizeSP());
+	}
 }

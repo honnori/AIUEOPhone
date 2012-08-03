@@ -12,18 +12,6 @@ public class CaseConverterUtil {
 	}
 
 
-	public static final String[][] allCaseList = {
-			{"あ","い","う","え","お"},		// [0][0-4]
-			{"か","き","く","け","こ"},		// [1][0-4]
-			{"さ","し","す","せ","そ"},		// [2][0-4]
-			{"た","ち","つ","て","と"},		// [3][0-4]
-			{"な","に","ぬ","ね","の"},	// [4][0-4]
-			{"は","ひ","ふ","へ","ほ"},	// [5][0-4]
-			{"ま","み","む","め","も"},	// [6][0-4]
-			{"や","ゆ","よ","",""},		// [7][0-4]
-			{"ら","り","る","れ","ろ"},		// [8][0-4]
-			{"わ","を","ん","",""}};		// [9][0-4]
-
 	
 	  private static final String[] ZENKAKU_HIRAGANA = { "ぁ", "あ", "ぃ", "い", "ぅ",
 	      "う", "ぇ", "え", "ぉ", "お", "か", "が", "き", "ぎ", "く", "ぐ", "け", "げ",
@@ -135,22 +123,5 @@ public class CaseConverterUtil {
 		  }
 		 return flag;
 	  }
-	 
-	 
-	public String getCase(int dimension1, int dimension2) {
-		return allCaseList[dimension1][dimension2];
-	}
-	
-	public void setSetToTextView(TextView view, int dimension1, int dimension2) {
-		
-		// 設定文字が無いViewは無効に設定
-		if(((dimension1 == 7) && (dimension2 == 3))			// や行の4段目
-			|| ((dimension1 == 7) && (dimension2 == 4))		// や行の5段目
-			|| ((dimension1 == 9) && (dimension2 == 3))		// わ行の4段目
-			|| ((dimension1 == 9) && (dimension2 == 4))) {	// わ行の5段目
-			view.setEnabled(false);		// Viewを無効
-		}
-		view.setText(this.getCase(dimension1, dimension2));
-	}
 
 }

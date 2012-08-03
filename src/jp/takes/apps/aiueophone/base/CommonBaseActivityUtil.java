@@ -7,33 +7,23 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 
-public class CommonActivityUtil {
-	Activity currentActivity = null;
+/**
+ * 基底クラスと連携してアプリ全体に反映させる表示や処理を実装するためのクラス
+ * また、全体で使用するUtilityメソッドを実装する
+ * @author take
+ *
+ */
+public class CommonBaseActivityUtil {
+	// 現在Activity
+	private Activity currentActivity = null;
 
-	public CommonActivityUtil(Activity activity) {
+	public CommonBaseActivityUtil(Activity activity) {
 		super();
 		
-		currentActivity = activity;
+		// 対象のActivityを設定
+		this.currentActivity = activity;
 	}
 
-	/**
-	 * アラートダイアログを表示する(リスト選択形式)
-	 * @param context OnClickListenerを実装したActivityクラスのオブジェクト<br>
-	 *                contextのonClic()メソッドで選択時のアクションを記述する。
-	 * @param list　　　表示する一覧
-	 * @param title　　ダイアログのタイトルOnClickListener
-	 */
-	public void showAlert(Context context, String title, String[] list) {
-        // 候補一覧表示のダイアログ生成
-        AlertDialog.Builder myDialogBuilder = new AlertDialog.Builder(context);
-        myDialogBuilder.setTitle(title);
-        myDialogBuilder.setItems(list, (android.content.DialogInterface.OnClickListener)context);
-        myDialogBuilder.setNeutralButton(android.R.string.cancel, null);
-        myDialogBuilder.setCancelable(true);
-        AlertDialog myAlertDialog = myDialogBuilder.create();
-        myAlertDialog.show();
-	}
-	
 	/**
 	 * 縦横固定の設定をActivityに適用する
 	 * @param fixOrient 固定するならtrue，回転するように戻すならfalse
@@ -68,6 +58,5 @@ public class CommonActivityUtil {
 		
 		return size/1000000;
 	}
-
 }
 
