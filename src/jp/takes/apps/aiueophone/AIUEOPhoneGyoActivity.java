@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import jp.takes.apps.aiueophone.base.BaseActivity;
 import jp.takes.apps.aiueophone.data.CommonData;
 import jp.takes.apps.aiueophone.util.AlertDialogUtil;
+import jp.takes.apps.aiueophone.util.Messages;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -28,6 +29,16 @@ public class AIUEOPhoneGyoActivity extends BaseActivity implements OnClickListen
         
         // アプリの初期処理を実施(ルートの画面でのみ呼び出す)
         this.init();
+        
+// メッセージクラスのテスト用に使用
+//        this.log(this.getMessage(Messages.I0001, "アプリ"));
+//        this.log(this.getMessage(Messages.I0002, "アプリ"));
+//        this.log(this.getMessage(Messages.I0003, "音声入力アプリ"));
+//        this.log(this.getMessage(Messages.W1001));
+//        this.log(this.getMessage(Messages.W1002));
+//        this.log(this.getMessage(Messages.W1003));
+//        this.log(this.getMessage(Messages.E2001, "123456"));
+//        this.log(this.getMessage(Messages.E2002, "999999"));
         
         this.setContentView(R.layout.gyo_case);
     }

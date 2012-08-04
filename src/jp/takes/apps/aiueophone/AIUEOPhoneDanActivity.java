@@ -29,14 +29,12 @@ public class AIUEOPhoneDanActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.dan_case_list);
         this.showDanList();
-        
     }
     
 	@Override
 	protected void onStop() {
 		super.onStop();
 	}
-
 
 	/**
 	 * あ-わ行のボタンが押下された場合
@@ -52,7 +50,6 @@ public class AIUEOPhoneDanActivity extends BaseActivity {
 		Intent i = new Intent(this, AdressListActivity.class);
 		i.putExtra(CommonData.INTENT_NAME_DAN, dispName);
 		this.startActivityForResult(i, 0);
-
 	}
 
 	/** 
@@ -73,7 +70,6 @@ public class AIUEOPhoneDanActivity extends BaseActivity {
 			}
 		}
 	}
-
 
 	public void setAnyDanSetToTextView(TextView[] views, Integer dimension1) {
 		for (Integer i = 0; i < 5; i++) {

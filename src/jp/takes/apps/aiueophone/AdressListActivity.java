@@ -24,7 +24,6 @@ public class AdressListActivity extends BaseActivity {
 	public	Integer position = 0;
 	private	Integer displayBarNum = 4;
 	
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		this.startLog(new Throwable());		// メソッド開始ログ

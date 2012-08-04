@@ -2,6 +2,7 @@ package jp.takes.apps.aiueophone.base;
 
 import jp.takes.apps.aiueophone.data.PreferenceData;
 import jp.takes.apps.aiueophone.util.LogUtil;
+import jp.takes.apps.aiueophone.util.Messages;
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -22,7 +23,47 @@ public abstract class BaseActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		// Activityクラス共通のUtilクラスを生成
 		cmnUtil = new CommonBaseActivityUtil(this);
+	}
+	
+	/**
+	 * メッセージIDに対応するメッセージ本文を取得する 　可変文字列無し
+	 * 指定した可変文字列パラメタの数が合わない場合、ただしく取得できません。
+	 * @param message
+	 * @return
+	 */
+	public String getMessage(String message) {
+		return Messages.getMessage(this, message, null);
+	}
 
+	/**
+	 * メッセージIDに対応するメッセージ本文を取得する 　可変文字列が１つ定義されているメッセージで使用する
+	 * 指定した可変文字列パラメタの数が合わない場合、ただしく取得できません。
+	 * @param message
+	 * @return
+	 */
+	public String getMessage(String message, String arg1) {
+		return Messages.getMessage(this, message, new String[] {arg1});
+	}
+
+	
+	/**
+	 * メッセージIDに対応するメッセージ本文を取得する 　可変文字列が２つ定義されているメッセージで使用する
+	 * 指定した可変文字列パラメタの数が合わない場合、ただしく取得できません。
+	 * @param message
+	 * @return
+	 */
+	public String getMessage(String message, String arg1, String arg2) {
+		return Messages.getMessage(this, message, new String[] {arg1, arg2});
+	}
+
+	/**
+	 * メッセージIDに対応するメッセージ本文を取得する 　可変文字列が３つ定義されているメッセージで使用する
+	 * 指定した可変文字列パラメタの数が合わない場合、ただしく取得できません。
+	 * @param message
+	 * @return
+	 */
+	public String getMessage(String message, String arg1, String arg2, String arg3) {
+		return Messages.getMessage(this, message, new String[] {arg1, arg2, arg3});
 	}
 
 	/**

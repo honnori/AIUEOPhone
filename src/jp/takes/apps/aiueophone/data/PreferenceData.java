@@ -17,9 +17,9 @@ public class PreferenceData {
 	// 文字サイズのデフォルト値　中
 	public static final String DEFAULT_CASE_SIZE = "2";
 	// 表示文字サイズ　大
-	private static final Integer CASE_SIZE_BIG = 36;
+	private static final Integer CASE_SIZE_BIG = 34;
 	// 表示文字サイズ　中
-	private static final Integer CASE_SIZE_MIDDLE = 32;
+	private static final Integer CASE_SIZE_MIDDLE = 30;
 	// 表示文字サイズ　小
 	private static final Integer CASE_SIZE_SMALL = 26;
 
