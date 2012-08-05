@@ -2,11 +2,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 	<PreferenceCategory android:title="設定">
 		<CheckBoxPreference
-			android:key="debugMode"
+			android:key="@string/debugMode"
 			android:title="デバッグモード"
 			android:summary="デバッグモードをONにする場合にチェックします" />
 		<ListPreference
-			android:key="caseSize"
+			android:key="@string/caseSize"
 			android:title="表示文字サイズの設定"
 			android:summary="表示文字のサイズを大／中／小から選択します。"
 			android:dialogTitle="表示文字サイズ設定"

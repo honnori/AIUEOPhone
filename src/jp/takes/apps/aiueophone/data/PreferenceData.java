@@ -3,6 +3,7 @@
  */
 package jp.takes.apps.aiueophone.data;
 
+import jp.takes.apps.aiueophone.util.LogUtil;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -46,6 +47,8 @@ public class PreferenceData {
 		// データ保存領域から文字サイズ設定を取得
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
 		String size = pref.getString("caseSize", DEFAULT_CASE_SIZE);
+		
+		LogUtil.d("PreferenceData", "caseSize = " + size);
 		
 		// 文字列が空の場合、デフォルト値を設定
 		if (size.equals("")) {

@@ -7,7 +7,6 @@ import android.util.Log;
 public class LogUtil {
 
 	// TODO 出力先を個別の別ファイルに切り替える機能を付ける？
-	
 	public static void d(String tag, String message) {
 		if (PreferenceData.isdebugMode()) {
 			Log.d(tag, message);

@@ -2,6 +2,7 @@ package jp.takes.apps.aiueophone;
 
 import jp.takes.apps.aiueophone.base.BasePreferenceActivity;
 import jp.takes.apps.aiueophone.data.PreferenceData;
+import jp.takes.apps.aiueophone.util.Messages;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -10,11 +11,17 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+/**
+ * 設定画面のActivity
+ * @author ict
+ *
+ */
 public class MainPreferenceActivity extends BasePreferenceActivity implements OnPreferenceChangeListener{
 
-	// ListPreference
+	/* ListPreference 文字サイズ選択用のリスト */
 	private ListPreference listPref = null;
-	// CheckBoxPreference
+	
+	/* CheckBoxPreference デバッグモード設定用のチェックボックス */
 	private CheckBoxPreference cbp = null;
 
 	@Override
@@ -23,22 +30,28 @@ public class MainPreferenceActivity extends BasePreferenceActivity implements On
 		this.addPreferencesFromResource(R.xml.pref);
 
 		// 保存データ領域へアクセス
-		SharedPreferences pref = PreferenceManager
-				.getDefaultSharedPreferences(this);
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 
-		// ListPreferenceの取得
-		listPref = (ListPreference) this.findPreference("caseSize");
+		// 文字サイズ設定オブジェクトの取得
+		listPref = (ListPreference) this.findPreference(this.getString(R.string.caseSize));
+
+		// 文字サイズ設定オブジェクトののリスナーを設定
 		listPref.setOnPreferenceChangeListener(this);
 
 		// 文字サイズ設定の初期表示
-		String param = pref.getString("caseSize", "2");
+		String param = pref.getString(listPref.getKey(), PreferenceData.DEFAULT_CASE_SIZE);
 		listPref.setDefaultValue(param);
+		listPref.setValueIndex(Integer.parseInt(param) -1);
 		this.setSummary(param);
 
-		// デバッグモードの初期表示
-		cbp = (CheckBoxPreference)this.findPreference("debugMode");
+		// デバッグモードの設定オブジェクトの取得
+		cbp = (CheckBoxPreference)this.findPreference(this.getString(R.string.debugMode));
+
+		// デバッグモードの設定オブジェクトのリスナーを設定
 		cbp.setOnPreferenceChangeListener(this);
-		boolean debugFlag = pref.getBoolean("debugMode", false);
+
+		// デバッグモードの初期表示
+		boolean debugFlag = pref.getBoolean(cbp.getKey(), false);
 		cbp.setDefaultValue(debugFlag);
 	}
 
@@ -68,7 +81,7 @@ public class MainPreferenceActivity extends BasePreferenceActivity implements On
 	// Summaryを設定
 	public void setSummary(String param) {
 		CharSequence[] sizes = listPref.getEntries();
-		listPref.setSummary(String.format("現在の設定は「%s」です", sizes[Integer.parseInt(param) - 1]));
+		listPref.setSummary(this.getMessage(Messages.I0004, sizes[Integer.parseInt(param) - 1].toString()));
 	}
 
 	// Activity破棄時に実行

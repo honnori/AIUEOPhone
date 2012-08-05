@@ -9,48 +9,60 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * 電話相手先の詳細画面
+ * 
+ * @author ict
+ *
+ */
 public class AdressDetailActivity extends BaseActivity {
 	
-    public String name = null;
-    public String kana = null;
-    public String number = null;
+	private String name = null;
+	private String kana = null;
+	private String number = null;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.adress_detail);
-        
-        this.showAdressDetail();
-    }
-    
-    public void showAdressDetail() {
-        Intent i = this.getIntent();
-        name = i.getStringExtra(CommonData.INTENT_NAME_NAME);
-        kana = i.getStringExtra(CommonData.INTENT_NAME_KANA);
-        number = i.getStringExtra(CommonData.INTENT_NAME_NUMBER);
-        
-        TextView vDispName = (TextView)this.findViewById(R.id.dispName);
-        TextView vPhoneNum = (TextView)this.findViewById(R.id.dispPhoneNum);
-        
-        vDispName.setText(name + "\n" + kana);
-        vPhoneNum.setText(number);
-        
-    }
-    
-    
-    /**
-     * 電話するボタン押下
-     * @param view
-     */
-    public void pressedDial(View view) {
-    	if (number != null) {
-        	Intent intent = new Intent( Intent.ACTION_CALL, Uri.parse("tel:" + number));
-//        	Intent intent = new Intent( Intent.ACTION_DIAL, Uri.parse("tel:" + number));
-        	this.startActivity(intent);
-    	}
-    	
-    }
-    
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.setContentView(R.layout.adress_detail);
+
+		this.showAdressDetail();
+	}
+
+	
+	/**
+	 * 電話相手先の詳細画面の表示内容を設定する
+	 */
+	private void showAdressDetail() {
+		Intent i = this.getIntent();
+		name = i.getStringExtra(CommonData.INTENT_NAME_NAME);
+		kana = i.getStringExtra(CommonData.INTENT_NAME_KANA);
+		number = i.getStringExtra(CommonData.INTENT_NAME_NUMBER);
+
+		TextView vDispName = (TextView) this.findViewById(R.id.dispName);
+		TextView vPhoneNum = (TextView) this.findViewById(R.id.dispPhoneNum);
+
+		vDispName.setText(name + "\n" + kana);
+		vPhoneNum.setText(number);
+
+	}
+
+	/**
+	 * 電話するボタン押下
+	 * 
+	 * @param view
+	 */
+	public void pressedDial(View view) {
+		if (number != null) {
+			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+					+ number));
+			// Intent intent = new Intent( Intent.ACTION_DIAL, Uri.parse("tel:"
+			// + number));
+			this.startActivity(intent);
+		}
+
+	}
+
 	/**
 	 * 表示文字列のサイズを変更する。
 	 */

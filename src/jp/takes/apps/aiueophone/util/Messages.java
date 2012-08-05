@@ -11,16 +11,16 @@ public class Messages {
 	
 	//// 自動生成部分　ここから
     /* メッセージID一覧 */
-    /* messages1.xmlとの連携 */
+    /* messages.xmlとの連携 */
     public static final String I0001 = "I0001";
     public static final String I0002 = "I0002";
     public static final String I0003 = "I0003";
+    public static final String I0004 = "I0004";
     public static final String W1001 = "W1001";
     public static final String W1002 = "W1002";
     public static final String W1003 = "W1003";
     public static final String E2001 = "E2001";
     public static final String E2002 = "E2002";
-
 	//// 自動生成部分　ここまで
 
 	/**
@@ -38,9 +38,8 @@ public class Messages {
 				activity.getPackageName());
 
 		// XMLリソースからメッセージフォーマットを取得
-		String strFormat = null;
 		try {
-			strFormat = activity.getString(resId);
+			message = activity.getString(resId);
 		} catch (Exception e) {
 			LogUtil.d("MessageManager.getMessage()", String.format("指定したメッセージIDは存在しません。 Message id = %s", id));
 			e.printStackTrace();
@@ -48,27 +47,27 @@ public class Messages {
 		}
 		
 		// フォーマットの可変文字列数を取得
-		Integer argNum = Messages.analyzeMessageFormat(strFormat);
+		Integer argNum = Messages.analyzeMessageFormat(message);
 //		LogUtil.d("MessageManager.getMessage()", "フォーマット = " + strFormat);
 		
-		message = strFormat;
+		// 
 		switch(argNum) {
 		case 0:
 			// メッセージのまま返却
 			break;
 		case 1:
 			if ((args != null) && (args.length == 1)) {
-				message = String.format(strFormat, args[0]);
+				message = String.format(message, args[0]);
 			}
 			break;
 		case 2:
 			if ((args != null) && (args.length == 2)) {
-				message = String.format(strFormat, args[0], args[1]);
+				message = String.format(message, args[0], args[1]);
 			}
 			break;
 		case 3:
 			if ((args != null) && (args.length == 3)) {
-				message = String.format(strFormat, args[0], args[1], args[2]);
+				message = String.format(message, args[0], args[1], args[2]);
 			}
 			break;
 		}

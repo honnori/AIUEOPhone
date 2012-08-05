@@ -34,6 +34,8 @@
     <string name="setting">設定</string>
     <string name="preView">前へ</string>
     <string name="next">次へ</string>
+    <string name="caseSize">caseSize</string>
+    <string name="debugMode">debugMode</string>
     <string name="DispCaseBig">大</string>
     <string name="DispCaseMiddle">中</string>
     <string name="DispCaseSmall">小</string>

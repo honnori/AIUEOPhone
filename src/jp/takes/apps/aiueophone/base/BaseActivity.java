@@ -6,10 +6,20 @@ import jp.takes.apps.aiueophone.util.Messages;
 import android.app.Activity;
 import android.os.Bundle;
 
+/**
+ * Activityクラスを継承して画面生成したい場合に継承する基底クラス
+ * @author ict
+ *
+ */
 public abstract class BaseActivity extends Activity {
 	
+	/* ユーティリティとして利用する共通部品のオブジェクト */
 	public CommonBaseActivityUtil cmnUtil = null;
 
+	/**
+	 * アプリの起動時に一度だけ呼ばれる初期処理用メソッド
+	 * TODO 現状、onCreateで呼ぶようにしてあるため、厳密には一度だけではないのでどうにかしたい。
+	 */
 	public void init() {
 		// デバッグモードを初期値を設定
 		PreferenceData.takeDebugModeFromSharedPreferences(this);
@@ -118,9 +128,10 @@ public abstract class BaseActivity extends Activity {
 	}
 
 	/**
-	 *  文字サイズを設定する。
-	 *  変更対象の部品のテキストサイズを設定する処理を実装する。
-	 *  onResume()時にCALLされる
+	 *  文字サイズを設定する。<br>
+	 *  変更対象の部品のテキストサイズを設定する処理を実装する。<br>
+	 *  onResume()時にCALLされる<br>
+	 *  サブクラスで文字サイズ変更対象の部品の文字サイズ変更処理を実装すること<br>
 	 */
 	public abstract void changeCaseSize();
 

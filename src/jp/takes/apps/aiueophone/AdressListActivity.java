@@ -18,11 +18,24 @@ import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * 電話帳データの一覧を表示する画面
+ * （４件づつ表示する）
+ * @author ict
+ *
+ */
 public class AdressListActivity extends BaseActivity {
 	
+	/* アドレス情報を格納するクラスの配列 */
 	public	AdressData[] adressList = null;
+	
+	/* 検索のキーとなる文字列 */
 	public	String selectCase = null;
+
+	/* アドレス情報格納クラス配列の現在表示対象の位置 */
 	public	Integer position = 0;
+	
+	/* 表示するアドレスの数 */
 	private	Integer displayBarNum = 4;
 	
 	@Override
@@ -53,7 +66,9 @@ public class AdressListActivity extends BaseActivity {
 	public void pressedNameButton(View view) {
 		this.startLog(new Throwable());		// メソッド開始ログ
 
+		// 押されたボタンが上から何番目かを格納する
 		Integer pos = -1;
+
 		Button btn = (Button)view;
 		Integer id = btn.getId();
 		
@@ -138,23 +153,23 @@ public class AdressListActivity extends BaseActivity {
 			this.finish();
 			return null;
 		}
-        
-     // ソート文字を格納（連絡先一覧を "ふりがな" 順でソート）
-        String order_str =
-          " CASE" +
-          " WHEN IFNULL(" + ContactsContract.Data.DATA9 + ", '') = ''" + 	// Data.DATA9がNULLの場合は空文字を代入
-          " THEN 1 ELSE 0" + 												// Data.DATA9が空文字のレコードを最後にする
-          " END, " + ContactsContract.Data.DATA9 + " ," +
-          " CASE" +
-          " WHEN IFNULL(" + ContactsContract.Data.DATA7 + ", '') = ''" +
-          " THEN 1 ELSE 0" +
-          " END, " + ContactsContract.Data.DATA7;
 
+		// ソート文字を格納（連絡先一覧を "ふりがな" 順でソート）
+		String order_str = " CASE"
+				+ " WHEN IFNULL("
+				+ ContactsContract.Data.DATA9
+				+ ", '') = ''"						// Data.DATA9がNULLの場合は空文字を代入
+				+ " THEN 1 ELSE 0"					// Data.DATA9が空文字のレコードを最後にする
+				+ " END, " + ContactsContract.Data.DATA9 + " ," + " CASE"
+				+ " WHEN IFNULL(" + ContactsContract.Data.DATA7 + ", '') = ''"
+				+ " THEN 1 ELSE 0" + " END, " + ContactsContract.Data.DATA7;
 
-        // DATA表から連絡先名を全て取得
-        /* MIMETYPE=vnd.android.cursor.item/nameの場合、連絡先名レコードが取得できる。
-         * 連絡先名レコードの場合、data1 には表示名（姓名）、data2 には表示名（名）、data3 には表示名（姓）、data7 にはふりがな（名）、data9 にはふりがな（姓）が格納されている。
-         */
+		// DATA表から連絡先名を全て取得
+		/*
+		 * MIMETYPE=vnd.android.cursor.item/nameの場合、連絡先名レコードが取得できる。
+		 * 連絡先名レコードの場合、data1 には表示名（姓名）、data2 には表示名（名）、data3 には表示名（姓）、data7
+		 * にはふりがな（名）、data9 にはふりがな（姓）が格納されている。
+		 */
 		Cursor dataNamecursor = cr.query(ContactsContract.Data.CONTENT_URI,
 				null,
 				ContactsContract.Data.MIMETYPE + " = ?",
@@ -206,7 +221,6 @@ public class AdressListActivity extends BaseActivity {
 		// adressListをかな順にソートする。
 		java.util.Arrays.sort(adressData);
 		
-
 		this.endLog(new Throwable());		// メソッド終了ログ
 
 		return adressData;
@@ -294,6 +308,7 @@ public class AdressListActivity extends BaseActivity {
 				buttonList[i].setText(this.adressList[this.position + i].displayName + "\n" + this.adressList[this.position + i].kanaName);
 			}
 			else {
+				// 表示する電話帳の件数が４件よりも小さい場合、空のアイテムは無効にする
 				buttonList[i].setText("");
 				buttonList[i].setEnabled(false);
 			}
@@ -332,5 +347,5 @@ public class AdressListActivity extends BaseActivity {
 
 		this.endLog(new Throwable());
 	}
-	
+
 }

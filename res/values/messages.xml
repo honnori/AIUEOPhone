@@ -3,6 +3,7 @@
     <string name="I0001">%1$sが正常に起動しました。</string>
     <string name="I0002">%1$sが正常に停止しました。</string>
     <string name="I0003">他アプリ(%1$s)と連携します。</string>
+    <string name="I0004">現在の設定は「%1$s」です。</string>
     <string name="W1001">音声入力アプリは本機にインストールされていません。</string>
     <string name="W1002">連絡帳の情報がありません。</string>
     <string name="W1003">連絡帳のデータを取得できませんでした。連絡帳にデータが無い可能性があります。</string>

@@ -105,7 +105,7 @@ public class CaseConverterUtil {
 	/**
 	 * 渡された文字列が、全てかな文字であるか判定します。
 	 * 
-	 * @return　ｔｒｕｅ：全てかな文字　false：かな文字以外を含む
+	 * @return　true：全てかな文字　false：かな文字以外を含む
 	 */
 	public boolean judgeWhetherKanaString(String moji) {
 		boolean flag = false;
