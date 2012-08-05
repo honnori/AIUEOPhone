@@ -1,6 +1,9 @@
 package jp.takes.apps.aiueophone.util;
 
 public class CaseConverterUtil {
+	
+	public static int MODE_HAN = 0;
+	public static int MODE_ZEN = 1;
 
 	private static final String[] ZENKAKU_HIRAGANA = { "ぁ", "あ", "ぃ", "い", "ぅ",
 			"う", "ぇ", "え", "ぉ", "お", "か", "が", "き", "ぎ", "く", "ぐ", "け", "げ",
@@ -36,89 +39,132 @@ public class CaseConverterUtil {
 		super();
 	}
 
-	public String changeZenkakuToHankaku(String strBrefore) {
+	/**
+	 * 
+	 * @param category 変換種別　半角カナへ変換：0　　全角カタカナへ変換：1
+	 * @param strBrefore
+	 * @return
+	 */
+	public String changeKanaCode(Integer category, String strBrefore) {
 		String strAfter = "";
 
 		if (strBrefore != null) {
 			Integer strLen = strBrefore.length();
 			for (Integer i = 0; i < strLen; i++) {
 				String temp = strBrefore.substring(i, i + 1);
-				strAfter = strAfter + this.getHankakuFromZenkaku(temp);
+				if (category == 1) {
+					// 全角カタカナへの変換時は、2文字目が濁点・半濁点の場合、一文字目と1セットとみなす
+					// 文字が半角カナで濁点、半濁点がつく可能性がある文字の場合、処理を実施する
+					if ("ｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾊﾋﾌﾍﾎ".indexOf(temp) >= 0) {
+						// 次の文字が濁点／半濁典がそれ以外かを判断する。
+						String nextCase = strBrefore.substring(i + 1, i + 2);
+						if ("ﾞﾟ".indexOf(nextCase) >= 0) {
+							// 濁点、半濁点があった場合
+							temp += nextCase;
+							i++;
+						}
+					}
+				}
+				temp = convertToHankakuKana(category, temp);
+				
+				strAfter = strAfter + temp;
 			}
 		}
 		return strAfter;
 	}
+	
 
 	/**
-	 * 全角ひらがな、全角カタカナを半角カタカナに変更します。 一文字のString型を引数として受け取りマッチングした半角文字を返す
+	 * 全角ひらがな、全角カタカナを半角カタカナに変更します。
+	 * 一文字のString型を引数として受け取りマッチングした全角カタカナ文字を返す
 	 * 
 	 * @param strBefore
 	 * @return
 	 */
-	public String getHankakuFromZenkaku(String strBefore) {
+	public String convertToHankakuKana(Integer category, String strBefore) {
 		String strAfter = null;
 
 		if (strBefore != null) {
-			// 全角ひらがなからの変更
-			strAfter = this.comvertZenkakuToHankaku(strBefore,
-					CaseConverterUtil.ZENKAKU_HIRAGANA);
-
-			// 全角カタカナからの変更
-			if (strAfter == null) {
-				// まだ設定されていないので全角カタカナとマッチング
-				strAfter = this.comvertZenkakuToHankaku(strBefore,
-						CaseConverterUtil.ZENKAKU_KATAKANA);
+			
+			if (category == 0) {	// 半角カナへの変更
+				// 全角ひらがな→半角カナの変更
+				strAfter = this.convertOneCaseKanamoji(strBefore, CaseConverterUtil.ZENKAKU_HIRAGANA, CaseConverterUtil.HANKAKU_KATAKANA);
+				if (strAfter == null) {
+					// 全角カタカナから→半角カナの変更
+					strAfter = this.convertOneCaseKanamoji(strBefore, CaseConverterUtil.ZENKAKU_KATAKANA, CaseConverterUtil.HANKAKU_KATAKANA);
+				}
+			}
+			else if (category == 1) {	// 全角カナへの変更
+				// 半角カナ→全角カタカナの変更
+				strAfter = this.convertOneCaseKanamoji(strBefore, CaseConverterUtil.HANKAKU_KATAKANA, CaseConverterUtil.ZENKAKU_KATAKANA);
+				if (strAfter == null) {
+					// 全角ひらがな→全角カタカナの変更
+					strAfter = this.convertOneCaseKanamoji(strBefore, CaseConverterUtil.ZENKAKU_HIRAGANA, CaseConverterUtil.ZENKAKU_KATAKANA);
+				}
 			}
 
-			// 全角ひらがな、カタカナに一致しない場合
 			if (strAfter == null) {
-				// 引数をそのまま返す
+				// 変換されなかった場合、変換前の値を設定
 				strAfter = strBefore;
 			}
+
 		}
 		return strAfter;
 	}
 
+
 	/**
-	 * 一文字をマッピングした半角カナ配列に変換して返す
+	 * 一文字を指定したマッピングで変換して返す
 	 * 
-	 * @param moji
+	 * @param before
 	 *            　任意の一文字
-	 * @param zenkaku
+	 * @param from
 	 *            　マッピング用の配列
-	 * @return　対応した半角カナ文字<br>
+	 * @return　対応したカナ文字<br>
 	 *         一致する文字が無い場合、nullを返す
 	 * 
 	 */
-	private String comvertZenkakuToHankaku(String moji, String[] zenkaku) {
-		String hankaku = null;
-		Integer num = zenkaku.length;
-		for (Integer i = 0; i < num; i++) {
-			if (moji.equals(zenkaku[i])) {
-				hankaku = CaseConverterUtil.HANKAKU_KATAKANA[i];
+	private String convertOneCaseKanamoji(String before, String[] from, String[] to) {
+		String after = null;
+		for (Integer i = 0; i < from.length; i++) {
+			if (before.equals(from[i])) {
+				after = to[i];
 				break;
 			}
 		}
-		return hankaku;
+		return after;
 	}
-
+	
 	/**
 	 * 渡された文字列が、全てかな文字であるか判定します。
 	 * 
 	 * @return　true：全てかな文字　false：かな文字以外を含む
 	 */
-	public boolean judgeWhetherKanaString(String moji) {
+	public boolean judgeWhetherKanaString(String mojiretu) {
+		
 		boolean flag = false;
-		if (moji != null) {
-			if (this.comvertZenkakuToHankaku(moji,
-					CaseConverterUtil.ZENKAKU_HIRAGANA) != null) {
-				flag = true;
-			} else if (this.comvertZenkakuToHankaku(moji,
-					CaseConverterUtil.ZENKAKU_KATAKANA) != null) {
-				flag = true;
-			} else if (this.comvertZenkakuToHankaku(moji,
-					CaseConverterUtil.HANKAKU_KATAKANA) != null) {
-				flag = true;
+		if (mojiretu != null) {
+			Integer length = mojiretu.length();
+			for (int i = 0; i < length; i++) {
+				// フラグ初期化
+				flag = false;
+				String moji = mojiretu.substring(i, i+1);
+				
+				if (this.convertOneCaseKanamoji(moji,
+						CaseConverterUtil.ZENKAKU_HIRAGANA, CaseConverterUtil.HANKAKU_KATAKANA) != null) {
+					flag = true;
+				} else if (this.convertOneCaseKanamoji(moji,
+						CaseConverterUtil.ZENKAKU_KATAKANA, CaseConverterUtil.HANKAKU_KATAKANA) != null) {
+					flag = true;
+				} else if (this.convertOneCaseKanamoji(moji,
+						CaseConverterUtil.HANKAKU_KATAKANA, CaseConverterUtil.HANKAKU_KATAKANA) != null) {
+					flag = true;
+				}
+				
+				if (flag == false) {
+					// かな以外が存在する。
+					break;
+				}
 			}
 		}
 		return flag;

@@ -88,7 +88,7 @@ public class AdressListActivity extends BaseActivity {
 		// 電話相手の詳細画面へ遷移
 		Intent i = new Intent(this, AdressDetailActivity.class);
 		i.putExtra(CommonData.INTENT_NAME_NAME, adressList[position + pos].displayName);
-		i.putExtra(CommonData.INTENT_NAME_KANA, adressList[position + pos].kanaName);
+		i.putExtra(CommonData.INTENT_NAME_KANA, adressList[position + pos].kanaNameHan);
 		i.putExtra(CommonData.INTENT_NAME_NUMBER, adressList[position + pos].phoneNum);
 		this.startActivityForResult(i, 0);
 
@@ -200,8 +200,8 @@ public class AdressListActivity extends BaseActivity {
 					kanaTemp = kanaTemp + tmp;
 				}
 				
-				// ふりがなを全角かなを半角に変更してから格納する。
-				listKanaNames.add(new CaseConverterUtil().changeZenkakuToHankaku(kanaTemp));
+				// ふりがなを全角カタカナに変更してから格納する。
+				listKanaNames.add(kanaTemp);
 
 				// 電話番号を格納する
 				listPhoneNums.add(mailHash.get(id));
@@ -209,12 +209,14 @@ public class AdressListActivity extends BaseActivity {
 		}
 		dataNamecursor.close();
 		
+		CaseConverterUtil conUtil = new CaseConverterUtil();
 		Integer num = listKanaNames.size();
 		AdressData[] adressData = new AdressData[num];
 		for (Integer i = 0; i < num; i++) {
 			adressData[i] = new AdressData();
 			adressData[i].displayName = listNames.get(i);
-			adressData[i].kanaName = listKanaNames.get(i);
+			adressData[i].kanaNameZen = conUtil.changeKanaCode(CaseConverterUtil.MODE_ZEN, listKanaNames.get(i));
+			adressData[i].kanaNameHan = conUtil.changeKanaCode(CaseConverterUtil.MODE_HAN, listKanaNames.get(i));
 			adressData[i].phoneNum = listPhoneNums.get(i);
 		}
 		
@@ -240,7 +242,7 @@ public class AdressListActivity extends BaseActivity {
 		}
 
 		// 検索キーを半角カナに変換
-		this.selectCase = new CaseConverterUtil().changeZenkakuToHankaku(this.selectCase);
+		this.selectCase = new CaseConverterUtil().changeKanaCode(CaseConverterUtil.MODE_ZEN, this.selectCase);
 		this.log("selectCase = " + this.selectCase, new Throwable());
 		
 		this.position = this.matchCase(this.adressList, this.selectCase);
@@ -258,13 +260,21 @@ public class AdressListActivity extends BaseActivity {
 	private Integer matchCase(AdressData[] strList, String matchCase) {
 
 		Integer listNum = strList.length;
-		Integer position = 0;
+		Integer position = listNum;
+		boolean matchFlag = false;
+		
 		// 引数の配列分ループ
 		for (Integer i = 0; i < listNum; i++) {
-			if (strList[i].kanaName.compareTo(matchCase) >= 0) {
+			if (strList[i].kanaNameZen.compareTo(matchCase) >= 0) {
 				position = i;
+				matchFlag = true;
 				break;
 			}
+		}
+		
+		if ((matchFlag == false) && (matchCase.compareTo("ア") <= 0)) {
+			// 電話帳リストの最後尾よりも大きい検索キーの場合
+			position = 0;
 		}
 		
 		return position;
@@ -305,7 +315,7 @@ public class AdressListActivity extends BaseActivity {
 
 		for(int i = 0; i < this.displayBarNum; i++) {
 			if ((i + this.position) < this.adressList.length) {
-				buttonList[i].setText(this.adressList[this.position + i].displayName + "\n" + this.adressList[this.position + i].kanaName);
+				buttonList[i].setText(this.adressList[this.position + i].displayName + "\n" + this.adressList[this.position + i].kanaNameHan);
 			}
 			else {
 				// 表示する電話帳の件数が４件よりも小さい場合、空のアイテムは無効にする

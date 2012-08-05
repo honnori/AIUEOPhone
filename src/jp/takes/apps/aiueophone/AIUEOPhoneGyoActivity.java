@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import jp.takes.apps.aiueophone.base.BaseActivity;
 import jp.takes.apps.aiueophone.data.CommonData;
 import jp.takes.apps.aiueophone.util.AlertDialogUtil;
+import jp.takes.apps.aiueophone.util.CaseConverterUtil;
 import jp.takes.apps.aiueophone.util.Messages;
+import jp.takes.apps.aiueophone.util.ToastUtil;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -37,7 +39,7 @@ public class AIUEOPhoneGyoActivity extends BaseActivity implements OnClickListen
 
 		// メッセージクラスのテスト用に使用
 		// this.log(this.getMessage(Messages.I0001, "アプリ"));
-		// this.log(this.getMessage(Messages.I0002, "アプリ"));
+//		this.log(this.getMessage(Messages.I0002, "アプリ"));
 
 		this.setContentView(R.layout.gyo_case);
 	}
@@ -144,16 +146,29 @@ public class AIUEOPhoneGyoActivity extends BaseActivity implements OnClickListen
 				this.log("音声検索結果の数 = " + candidates.size());
 
 				Integer num = candidates.size();
+				
+				ArrayList<String> listNames = new ArrayList<String>();
+				
 				this.strNameList = new String[num];
 				for (Integer i = 0; i< num ; i++) {
-					this.strNameList[i] = candidates.get(i);
-					this.log("音声検索結果の候補 = " + this.strNameList[i]);
+					CaseConverterUtil util = new CaseConverterUtil();
+					String moji = candidates.get(i);
+					if (util.judgeWhetherKanaString(moji)) {
+						// 全てヒラガナの文字列のみが対象とする。
+						listNames.add(candidates.get(i));
+					}
+					
+					this.log("音声検索結果の候補 = " + candidates.get(i));
 				}
+				this.strNameList = (String[])listNames.toArray(new String[0]);
 				
-				if(num > 0) {
+				if(strNameList.length > 0) {
 					// 候補が取得できているので
 					// 候補一覧をダイアログで表示する
 					AlertDialogUtil.showAlert(this, this.getString(R.string.Candidatelist), this.strNameList);
+				}
+				else {
+					ToastUtil.showLong(this,"キーワードが取得できませんでした。");
 				}
 				break;
 			case 2:	// アドレス一覧表示画面
