@@ -90,7 +90,7 @@ public class AIUEOPhoneGyoActivity extends BaseActivity implements OnClickListen
 			this.startActivityForResult(intent, 1);
 		} catch (ActivityNotFoundException e) {
 			Toast.makeText(this, this.getString(R.string.NotExistVoiceApl), Toast.LENGTH_LONG).show();
-			this.log("音声入力アプリがありません");
+			this.log(this.getMessage(Messages.W1001));
 		}
 	}
 	

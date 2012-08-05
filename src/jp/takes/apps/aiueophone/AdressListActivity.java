@@ -7,6 +7,7 @@ import jp.takes.apps.aiueophone.base.BaseActivity;
 import jp.takes.apps.aiueophone.data.AdressData;
 import jp.takes.apps.aiueophone.data.CommonData;
 import jp.takes.apps.aiueophone.util.CaseConverterUtil;
+import jp.takes.apps.aiueophone.util.Messages;
 import jp.takes.apps.aiueophone.util.ToastUtil;
 
 import android.content.ContentResolver;
@@ -100,6 +101,12 @@ public class AdressListActivity extends BaseActivity {
 	}
 
 
+	/**
+	 * 連絡先(電話帳)データを取得します。
+	 * コンテンツプロバイダを使用して、電話番号を保持している連絡先を抽出して配列データとして取得する。
+	 * @return 名前、フリガナ、電話番号情報を保持したオブジェクトの配列（フリガナでソート済み）
+	 *
+	 */
 	private AdressData[] getAddressData() {
 		this.startLog(new Throwable());		// メソッド開始ログ
 		
@@ -124,7 +131,9 @@ public class AdressListActivity extends BaseActivity {
 		phoneNumberCursor.close();
 		
 		if (mailHash.size() == 0) {
-			ToastUtil.showLong(this, "電話帳の情報がありません。");
+			ToastUtil.showLong(this, this.getMessage(Messages.W1002));
+			this.log(this.getMessage(Messages.W1002));
+
 			// 表示できないので戻る
 			this.finish();
 			return null;

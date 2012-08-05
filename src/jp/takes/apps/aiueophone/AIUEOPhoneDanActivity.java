@@ -24,18 +24,20 @@ public class AIUEOPhoneDanActivity extends BaseActivity {
 		{"わ","を","ん","",""}};		// [9][0-4]
 
 	
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.dan_case_list);
-        this.showDanList();
-    }
-    
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.setContentView(R.layout.dan_case_list);
+		this.showDanList();
+	}
+
+	
 	@Override
 	protected void onStop() {
 		super.onStop();
 	}
 
+	
 	/**
 	 * あ-わ行のボタンが押下された場合
 	 * 各行の文字選択画面へ遷移
@@ -52,6 +54,7 @@ public class AIUEOPhoneDanActivity extends BaseActivity {
 		this.startActivityForResult(i, 0);
 	}
 
+	
 	/** 
 	 * startActivityForResultで起動したアクティビティから復帰した場合に呼ばれるメソッド
 	 * @author take
@@ -71,34 +74,46 @@ public class AIUEOPhoneDanActivity extends BaseActivity {
 		}
 	}
 
-	public void setAnyDanSetToTextView(TextView[] views, Integer dimension1) {
-		for (Integer i = 0; i < 5; i++) {
-			this.setSetToTextView(views[i], dimension1, i);
-		}
-	}
-	
-	public String getCase(int dimension1, int dimension2) {
+	/**
+	 * 五十音から該当の文字を取得する。
+	 * @param dimension1 　五十音の行の番号
+	 * @param dimension2　五十音の段の番号
+	 * @return
+	 */
+	private String getCase(Integer dimension1, Integer dimension2) {
 		return this.ALL_CASE_LIST[dimension1][dimension2];
 	}
-	
-	public void setSetToTextView(TextView view, int dimension1, int dimension2) {
+
+	/**
+	 * TextViewに対して、dimension1、dimension2で指定した文字を設定する。
+	 * @param ｔｖ　文字を設定するTextView
+	 * @param dimension1
+	 * @param dimension2
+	 */
+	private void setSetToTextView(TextView ｔｖ, Integer dimension1, Integer dimension2) {
 		
 		// 設定文字が無いViewは無効に設定
 		if(((dimension1 == 7) && (dimension2 == 3))			// や行の4段目
 			|| ((dimension1 == 7) && (dimension2 == 4))		// や行の5段目
 			|| ((dimension1 == 9) && (dimension2 == 3))		// わ行の4段目
 			|| ((dimension1 == 9) && (dimension2 == 4))) {	// わ行の5段目
-			view.setEnabled(false);		// Viewを無効
+			ｔｖ.setEnabled(false);		// Viewを無効
 		}
-		view.setText(this.getCase(dimension1, dimension2));
+		ｔｖ.setText(this.getCase(dimension1, dimension2));
 	}
 
+	private void setAnyDanSetToTextView(TextView[] views, Integer dimension1) {
+		for (Integer i = 0; i < 5; i++) {
+			this.setSetToTextView(views[i], dimension1, i);
+		}
+	}
+	
 
 	/**
 	 * 前画面で選択された行を判別し適切なボタンを表示する。
 	 */
 	private void showDanList() {
-        Intent i = this.getIntent();
+		Intent i = this.getIntent();
 		String dispName = i.getStringExtra(CommonData.INTENT_NAME_GYO);
 		
 		Button buttonList[] = new Button[5];
