@@ -5,6 +5,8 @@ import jp.takes.apps.aiueophone.util.LogUtil;
 import jp.takes.apps.aiueophone.util.Messages;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.widget.TextView;
 
 /**
  * Activityクラスを継承して画面生成したい場合に継承する基底クラス
@@ -15,6 +17,13 @@ public abstract class BaseActivity extends Activity {
 	
 	/* ユーティリティとして利用する共通部品のオブジェクト */
 	public BaseCommonActivityUtil cmnUtil = null;
+
+	// メモリ表示再描画用のスレッド
+	private Thread th = null;
+	// メモリ表示再描画用のハンドラ
+	private Handler mHandler = new Handler();
+	// メモリ表示再描画用スレッドの実行フラグ
+	private boolean running = true;
 
 	/**
 	 * アプリの起動時に一度だけ呼ばれる初期処理用メソッド
@@ -33,6 +42,73 @@ public abstract class BaseActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		// Activityクラス共通のUtilクラスを生成
 		cmnUtil = new BaseCommonActivityUtil(this);
+		
+		// メモリ残量表示
+		this.MemoryDisplay();
+
+	}
+	
+	@Override
+	protected void onRestart() {
+		this.startLog(new Throwable());		// メソッド開始ログ
+		super.onRestart();
+		// メモリ残量表示
+		this.MemoryDisplay();
+		this.endLog(new Throwable());		// メソッド終了ログ
+
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+
+		// スレッド停止
+		this.running = false;
+		th = null;
+		this.log("Thread Stop ");
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+
+		// 解放できていなかった場合
+		this.running = false;
+		th = null;
+		this.log("Thread Stop ");
+	}
+
+	public void MemoryDisplay() {
+		final TextView titleText = (TextView) this.findViewById(android.R.id.title);
+		final BaseActivity crrentAct = this;
+
+		// 初回に一回だけ実行
+		if (th == null) {
+			running = true;
+			th = new Thread(new Runnable() {
+				public void run() {
+					while(running) {
+						// 再描画のキューをセット
+						mHandler.post(new Runnable() {
+							public void run() {
+								titleText.setText("AvaMem:" + cmnUtil.getAvailMemorySize());
+								crrentAct.log("Thread run ");
+							}
+						});
+
+						// スリープ
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			});
+			
+			this.log("Thread Start ");
+			th.start();
+		}
 	}
 
 	/**

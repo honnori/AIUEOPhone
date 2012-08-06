@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.os.Handler;
 
 /**
  * 基底クラスと連携してアプリ全体に反映させる表示や処理を実装するためのクラス
@@ -40,7 +41,6 @@ public class BaseCommonActivityUtil {
 		}
 	}
 
-	
 	/**
 	 * 	空きメモリ量取得
 	 * @return 使用可能メモリ量（MB）

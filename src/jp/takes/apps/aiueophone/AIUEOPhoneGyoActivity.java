@@ -47,8 +47,9 @@ public class AIUEOPhoneGyoActivity extends BaseActivity implements OnClickListen
 	protected void onStop() {
 		this.startLog(new Throwable());		// メソッド開始ログ
 		super.onStop();
-		this.endLog(new Throwable());		// メソッド開始ログ
+		this.endLog(new Throwable());		// メソッド終了ログ
 	}
+	
 	
 	/**
 	 * あ-わ行のボタンが押下された場合
@@ -71,7 +72,7 @@ public class AIUEOPhoneGyoActivity extends BaseActivity implements OnClickListen
 		this.startLog(new Throwable());		// メソッド開始ログ
 		// 検索キーなしでアドレス一覧表示画面へ遷移する
 		this.callAdressListActivity("");
-		this.endLog(new Throwable());		// メソッド開始ログ
+		this.endLog(new Throwable());		// メソッド終了ログ
 	}
 
 	/**
