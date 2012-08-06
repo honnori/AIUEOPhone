@@ -82,19 +82,15 @@ public class Messages {
 	private static Integer analyzeMessageFormat(String message) {
 		
 		// $sの数を数える
-		String item = "$s";
+		String[] item = {"%1$s", "%2$s", "%3$s"};
+		
 		Integer count = 0;
-		Integer i = 0;
-		while (i < message.length()) {
-			int index = message.indexOf(item, i);
-			if (index == -1) {
-				// 一致する文字列が無ければLOOPを抜ける
-				break;
+		for (int i = 0; i < item.length; i++) {
+			if (message.indexOf(item[i]) >= 0) {
+				count++;
 			}
-			i = index + item.length();
-			count++;
 		}
-
+		
 		return count;
 	}
 	

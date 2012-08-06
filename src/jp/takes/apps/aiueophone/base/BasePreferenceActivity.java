@@ -10,13 +10,13 @@ import android.preference.PreferenceActivity;
  *
  */
 public class BasePreferenceActivity extends PreferenceActivity {
-	public CommonBaseActivityUtil cmnUtil = null;
+	public BaseCommonActivityUtil cmnUtil = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Activityクラス共通のUtilクラスを生成
-		cmnUtil = new CommonBaseActivityUtil(this);
+		cmnUtil = new BaseCommonActivityUtil(this);
 	}
 	
 	/**

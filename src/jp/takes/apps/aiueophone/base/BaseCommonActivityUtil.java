@@ -12,11 +12,11 @@ import android.content.res.Configuration;
  * @author take
  *
  */
-public class CommonBaseActivityUtil {
+public class BaseCommonActivityUtil {
 	// 現在Activity
 	private Activity currentActivity = null;
 
-	public CommonBaseActivityUtil(Activity activity) {
+	public BaseCommonActivityUtil(Activity activity) {
 		super();
 		
 		// 対象のActivityを設定

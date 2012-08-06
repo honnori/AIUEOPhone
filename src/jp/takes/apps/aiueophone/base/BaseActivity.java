@@ -14,7 +14,7 @@ import android.os.Bundle;
 public abstract class BaseActivity extends Activity {
 	
 	/* ユーティリティとして利用する共通部品のオブジェクト */
-	public CommonBaseActivityUtil cmnUtil = null;
+	public BaseCommonActivityUtil cmnUtil = null;
 
 	/**
 	 * アプリの起動時に一度だけ呼ばれる初期処理用メソッド
@@ -32,9 +32,19 @@ public abstract class BaseActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Activityクラス共通のUtilクラスを生成
-		cmnUtil = new CommonBaseActivityUtil(this);
+		cmnUtil = new BaseCommonActivityUtil(this);
 	}
-	
+
+	/**
+	 * メッセージIDに対応するメッセージ本文を取得する 　可変文字列無し
+	 * 指定した可変文字列パラメタの数が合わない場合、ただしく取得できません。
+	 * @param message
+	 * @return
+	 */
+	private String getMessage(String message, String[] args) {
+		return Messages.getMessage(this, message, args);
+	}
+
 	/**
 	 * メッセージIDに対応するメッセージ本文を取得する 　可変文字列無し
 	 * 指定した可変文字列パラメタの数が合わない場合、ただしく取得できません。
@@ -42,7 +52,7 @@ public abstract class BaseActivity extends Activity {
 	 * @return
 	 */
 	public String getMessage(String message) {
-		return Messages.getMessage(this, message, null);
+		return this.getMessage(message, (String[])null);
 	}
 
 	/**
@@ -52,7 +62,7 @@ public abstract class BaseActivity extends Activity {
 	 * @return
 	 */
 	public String getMessage(String message, String arg1) {
-		return Messages.getMessage(this, message, new String[] {arg1});
+		return this.getMessage(message, new String[] {arg1});
 	}
 
 	
@@ -63,7 +73,7 @@ public abstract class BaseActivity extends Activity {
 	 * @return
 	 */
 	public String getMessage(String message, String arg1, String arg2) {
-		return Messages.getMessage(this, message, new String[] {arg1, arg2});
+		return this.getMessage(message, new String[] {arg1, arg2});
 	}
 
 	/**
@@ -73,7 +83,7 @@ public abstract class BaseActivity extends Activity {
 	 * @return
 	 */
 	public String getMessage(String message, String arg1, String arg2, String arg3) {
-		return Messages.getMessage(this, message, new String[] {arg1, arg2, arg3});
+		return this.getMessage(message, new String[] {arg1, arg2, arg3});
 	}
 
 	/**
@@ -129,7 +139,7 @@ public abstract class BaseActivity extends Activity {
 
 	/**
 	 *  文字サイズを設定する。<br>
-	 *  変更対象の部品のテキストサイズを設定する処理を実装する。<br>
+	 *  文字サイズ変更対象の部品のテキストサイズを設定する処理を実装する。<br>
 	 *  onResume()時にCALLされる<br>
 	 *  サブクラスで文字サイズ変更対象の部品の文字サイズ変更処理を実装すること<br>
 	 */

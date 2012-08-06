@@ -38,8 +38,7 @@ public class AIUEOPhoneGyoActivity extends BaseActivity implements OnClickListen
 		this.init();
 
 		// メッセージクラスのテスト用に使用
-		// this.log(this.getMessage(Messages.I0001, "アプリ"));
-//		this.log(this.getMessage(Messages.I0002, "アプリ"));
+		this.log(this.getMessage(Messages.I0001, this.getString(R.string.app_name)));
 
 		this.setContentView(R.layout.gyo_case);
 	}
