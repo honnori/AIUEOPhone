@@ -80,7 +80,6 @@ public abstract class BaseActivity extends Activity {
 
 	public void MemoryDisplay() {
 		final TextView titleText = (TextView) this.findViewById(android.R.id.title);
-		final BaseActivity crrentAct = this;
 
 		// 初回に一回だけ実行
 		if (th == null) {
@@ -92,7 +91,6 @@ public abstract class BaseActivity extends Activity {
 						mHandler.post(new Runnable() {
 							public void run() {
 								titleText.setText("AvaMem:" + cmnUtil.getAvailMemorySize());
-								crrentAct.log("Thread run ");
 							}
 						});
 

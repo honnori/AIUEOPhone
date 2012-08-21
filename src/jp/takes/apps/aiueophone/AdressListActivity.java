@@ -260,23 +260,16 @@ public class AdressListActivity extends BaseActivity {
 	private Integer matchCase(AdressData[] strList, String matchCase) {
 
 		Integer listNum = strList.length;
-		Integer position = listNum;
-		boolean matchFlag = false;
-		
-		// 引数の配列分ループ
-		for (Integer i = 0; i < listNum; i++) {
-			if (strList[i].kanaNameZen.compareTo(matchCase) >= 0) {
-				position = i;
-				matchFlag = true;
-				break;
+		Integer position = 0;
+
+		if (matchCase.compareTo("ア") >= 0) {
+			// 引数の配列分ループ
+			for (position = 0; position < listNum; position++) {
+				if (strList[position].kanaNameZen.compareTo(matchCase) >= 0) {
+					break;
+				}
 			}
 		}
-		
-		if ((matchFlag == false) && (matchCase.compareTo("ア") <= 0)) {
-			// 電話帳リストの最後尾よりも大きい検索キーの場合
-			position = 0;
-		}
-		
 		return position;
 	}
 	
